@@ -1,20 +1,20 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
-from .models import Room
+from .models import Room, Topic
+
 
 from .forms import RoomForm
 # Create your views here.
 
-
-# rooms = [
-#     {'id':1, 'name':'Python crash course'},
-#     {'id':2, 'name':'Javascript crash course'},
-#     {'id':3, 'name':'C crash course'},
-# ]
-
-
 def home(request):
-    rooms = Room.objects.all()
-    context = {'rooms': rooms}
+    q = request.GET.get('p') if request.GET.get('p') != None else ''
+    rooms = Room.objects.filter(Q(topic__name__icontains=q) &
+    Q(name__icontains=q) |
+    Q(description__icontains=q) |
+    Q(description__icontains=q)
+    )
+    topics = Topic.objects.all() 
+    context = {'rooms': rooms, 'topics': topics}
     return render(request, 'front/home.html', context)
 
 def room(request, pk):
