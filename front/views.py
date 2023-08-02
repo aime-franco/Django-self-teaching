@@ -44,12 +44,16 @@ def home(request):
 
 @login_required(login_url='login')
 def room(request, pk):
+   
     room = Room.objects.get(id=pk)
     context = {'room': room}
     return render(request, 'front/room.html', context) 
 
 @login_required(login_url='login')
 def create_room(request):
+    if request != user.host:
+        return redirect('login')
+
     form = RoomForm()
     if request.method == 'POST':
         form = RoomForm(request.POST)
