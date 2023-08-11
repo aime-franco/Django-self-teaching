@@ -37,6 +37,7 @@ def home(request):
     rooms = Room.objects.filter(Q(topic__name__icontains=q) |
     Q(name__icontains=q)
     )
+  
     topics = Topic.objects.all() 
     count_room = rooms.count() # count the number of rooms the topic
     context = {'rooms': rooms, 'topics': topics, 'count_room': count_room}
@@ -51,9 +52,6 @@ def room(request, pk):
 
 @login_required(login_url='login')
 def create_room(request):
-    if request != user.host:
-        return redirect('login')
-
     form = RoomForm()
     if request.method == 'POST':
         form = RoomForm(request.POST)
