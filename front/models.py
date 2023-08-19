@@ -45,7 +45,7 @@ class Message(models.Model):
 
    # I want to have the name of topic in order form
    class Meta():
-      ordering = ('body',)
+      ordering = ('-created', '-updates')
 
 
    # I have to return the name of the topic

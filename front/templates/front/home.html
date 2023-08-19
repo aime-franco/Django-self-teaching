@@ -9,7 +9,7 @@
 </style>
 <div class="home-container">
     <div>
-        <a href=""></a>
+        <h5>welcome {{user.username}}</h5>
         <h4>Browse Topics</h4>
         <hr>
         <div>
@@ -30,8 +30,10 @@
         <div>
                 {% for room in rooms %}
                     <div>
+                        {% if request.user == room.host %}
                         <a href="{%url 'update-room' room.id%}">Edit</a><br>
                         <a href="{%url 'delete-room' room.id%}">Delete</a><br>
+                        {% endif %}
                         <span>@{{room.host.username}}</span>
                         <h5>{{ room.id }} -- <a href="{% url 'room' room.id%}">{{ room.name }}</h5></a>
                         <small>{{room.topic.name}}</small>
